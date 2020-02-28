@@ -1,0 +1,411 @@
+{
+    "pred": "37155 of <=50K, 11687 of >50K",
+    "side": "right",
+    "name": "Marital = Married-civ-spouse",
+    "type": "categorical",
+    "size": 48842.0,
+    "children": [
+        {
+            "pred": "12395 of <=50K, 9984 of >50K",
+            "side": "right",
+            "name": "YearsOfEd > 12.5",
+            "type": "numerical",
+            "size": 22379.0,
+            "children": [
+                {
+                    "pred": "1878 of <=50K, 4784 of >50K",
+                    "side": "right",
+                    "name": "Gain > 5095.5",
+                    "type": "numerical",
+                    "size": 6662.0,
+                    "children": [
+                        {
+                            "pred": "3 of <=50K, 1007 of >50K",
+                            "side": "right",
+                            "name": "Age > 85.5",
+                            "type": "numerical",
+                            "size": 1010.0,
+                            "children": [
+                                {
+                                    "pred": "1 of <=50K, 4 of >50K",
+                                    "side": "right",
+                                    "name": "Gain > 15308.5",
+                                    "type": "numerical",
+                                    "size": 5.0,
+                                    "children": [
+                                        {
+                                            "name": "0 of <=50K, 3 of >50K",
+                                            "size": 3.0,
+                                            "side": "right"
+                                        },
+                                        {
+                                            "name": "1 of <=50K, 1 of >50K",
+                                            "size": 2.0,
+                                            "side": "left"
+                                        }
+                                    ]
+                                },
+                                {
+                                    "pred": "2 of <=50K, 1003 of >50K",
+                                    "side": "left",
+                                    "name": "Occupation = Farming-fishing",
+                                    "type": "categorical",
+                                    "size": 1005.0,
+                                    "children": [
+                                        {
+                                            "name": "1 of <=50K, 8 of >50K",
+                                            "size": 9.0,
+                                            "side": "right"
+                                        },
+                                        {
+                                            "name": "1 of <=50K, 995 of >50K",
+                                            "size": 996.0,
+                                            "side": "left"
+                                        }
+                                    ]
+                                }
+                            ]
+                        },
+                        {
+                            "pred": "1875 of <=50K, 3777 of >50K",
+                            "side": "left",
+                            "name": "Loss > 1782.5",
+                            "type": "numerical",
+                            "size": 5652.0,
+                            "children": [
+                                {
+                                    "pred": "20 of <=50K, 561 of >50K",
+                                    "side": "right",
+                                    "name": "Loss > 1989.5",
+                                    "type": "numerical",
+                                    "size": 581.0,
+                                    "children": [
+                                        {
+                                            "name": "18 of <=50K, 84 of >50K",
+                                            "size": 102.0,
+                                            "side": "right"
+                                        },
+                                        {
+                                            "name": "2 of <=50K, 477 of >50K",
+                                            "size": 479.0,
+                                            "side": "left"
+                                        }
+                                    ]
+                                },
+                                {
+                                    "pred": "1855 of <=50K, 3216 of >50K",
+                                    "side": "left",
+                                    "name": "HPR > 31.5",
+                                    "type": "numerical",
+                                    "size": 5071.0,
+                                    "children": [
+                                        {
+                                            "name": "1557 of <=50K, 3038 of >50K",
+                                            "size": 4595.0,
+                                            "side": "right"
+                                        },
+                                        {
+                                            "name": "298 of <=50K, 178 of >50K",
+                                            "size": 476.0,
+                                            "side": "left"
+                                        }
+                                    ]
+                                }
+                            ]
+                        }
+                    ]
+                },
+                {
+                    "pred": "10517 of <=50K, 5200 of >50K",
+                    "side": "left",
+                    "name": "Gain > 5095.5",
+                    "type": "numerical",
+                    "size": 15717.0,
+                    "children": [
+                        {
+                            "pred": "15 of <=50K, 751 of >50K",
+                            "side": "right",
+                            "name": "Age > 61.5",
+                            "type": "numerical",
+                            "size": 766.0,
+                            "children": [
+                                {
+                                    "pred": "12 of <=50K, 70 of >50K",
+                                    "side": "right",
+                                    "name": "Gain > 10585.5",
+                                    "type": "numerical",
+                                    "size": 82.0,
+                                    "children": [
+                                        {
+                                            "name": "0 of <=50K, 27 of >50K",
+                                            "size": 27.0,
+                                            "side": "right"
+                                        },
+                                        {
+                                            "name": "12 of <=50K, 43 of >50K",
+                                            "size": 55.0,
+                                            "side": "left"
+                                        }
+                                    ]
+                                },
+                                {
+                                    "pred": "3 of <=50K, 681 of >50K",
+                                    "side": "left",
+                                    "name": "YearsOfEd > 1.5",
+                                    "type": "numerical",
+                                    "size": 684.0,
+                                    "children": [
+                                        {
+                                            "name": "2 of <=50K, 681 of >50K",
+                                            "size": 683.0,
+                                            "side": "right"
+                                        },
+                                        {
+                                            "name": "1 of <=50K, 0 of >50K",
+                                            "size": 1.0,
+                                            "side": "left"
+                                        }
+                                    ]
+                                }
+                            ]
+                        },
+                        {
+                            "pred": "10502 of <=50K, 4449 of >50K",
+                            "side": "left",
+                            "name": "YearsOfEd > 8.5",
+                            "type": "numerical",
+                            "size": 14951.0,
+                            "children": [
+                                {
+                                    "pred": "8235 of <=50K, 4185 of >50K",
+                                    "side": "right",
+                                    "name": "Loss > 1782.5",
+                                    "type": "numerical",
+                                    "size": 12420.0,
+                                    "children": [
+                                        {
+                                            "name": "118 of <=50K, 375 of >50K",
+                                            "size": 493.0,
+                                            "side": "right"
+                                        },
+                                        {
+                                            "name": "8117 of <=50K, 3810 of >50K",
+                                            "size": 11927.0,
+                                            "side": "left"
+                                        }
+                                    ]
+                                },
+                                {
+                                    "pred": "2267 of <=50K, 264 of >50K",
+                                    "side": "left",
+                                    "name": "HPR > 43.5",
+                                    "type": "numerical",
+                                    "size": 2531.0,
+                                    "children": [
+                                        {
+                                            "name": "502 of <=50K, 112 of >50K",
+                                            "size": 614.0,
+                                            "side": "right"
+                                        },
+                                        {
+                                            "name": "1765 of <=50K, 152 of >50K",
+                                            "size": 1917.0,
+                                            "side": "left"
+                                        }
+                                    ]
+                                }
+                            ]
+                        }
+                    ]
+                }
+            ]
+        },
+        {
+            "pred": "24760 of <=50K, 1703 of >50K",
+            "side": "left",
+            "name": "Gain > 7055.5",
+            "type": "numerical",
+            "size": 26463.0,
+            "children": [
+                {
+                    "pred": "16 of <=50K, 447 of >50K",
+                    "side": "right",
+                    "name": "Age > 20.5",
+                    "type": "numerical",
+                    "size": 463.0,
+                    "children": [
+                        {
+                            "pred": "11 of <=50K, 446 of >50K",
+                            "side": "right",
+                            "name": "Gain > 8296.0",
+                            "type": "numerical",
+                            "size": 457.0,
+                            "children": [
+                                {
+                                    "pred": "1 of <=50K, 426 of >50K",
+                                    "side": "right",
+                                    "name": "WorkClass = Self-emp-not-inc",
+                                    "type": "categorical",
+                                    "size": 427.0,
+                                    "children": [
+                                        {
+                                            "name": "1 of <=50K, 45 of >50K",
+                                            "size": 46.0,
+                                            "side": "right"
+                                        },
+                                        {
+                                            "name": "0 of <=50K, 381 of >50K",
+                                            "size": 381.0,
+                                            "side": "left"
+                                        }
+                                    ]
+                                },
+                                {
+                                    "pred": "10 of <=50K, 20 of >50K",
+                                    "side": "left",
+                                    "name": "Gain > 7436.5",
+                                    "type": "numerical",
+                                    "size": 30.0,
+                                    "children": [
+                                        {
+                                            "name": "10 of <=50K, 3 of >50K",
+                                            "size": 13.0,
+                                            "side": "right"
+                                        },
+                                        {
+                                            "name": "0 of <=50K, 17 of >50K",
+                                            "size": 17.0,
+                                            "side": "left"
+                                        }
+                                    ]
+                                }
+                            ]
+                        },
+                        {
+                            "pred": "5 of <=50K, 1 of >50K",
+                            "side": "left",
+                            "name": "Occupation = Prof-specialty",
+                            "type": "categorical",
+                            "size": 6.0,
+                            "children": [
+                                {
+                                    "name": "0 of <=50K, 1 of >50K",
+                                    "size": 1.0,
+                                    "side": "right"
+                                },
+                                {
+                                    "name": "5 of <=50K, 0 of >50K",
+                                    "size": 5.0,
+                                    "side": "left"
+                                }
+                            ]
+                        }
+                    ]
+                },
+                {
+                    "pred": "24744 of <=50K, 1256 of >50K",
+                    "side": "left",
+                    "name": "YearsOfEd > 13.5",
+                    "type": "numerical",
+                    "size": 26000.0,
+                    "children": [
+                        {
+                            "pred": "1055 of <=50K, 358 of >50K",
+                            "side": "right",
+                            "name": "HPR > 43.5",
+                            "type": "numerical",
+                            "size": 1413.0,
+                            "children": [
+                                {
+                                    "pred": "342 of <=50K, 210 of >50K",
+                                    "side": "right",
+                                    "name": "Age > 32.5",
+                                    "type": "numerical",
+                                    "size": 552.0,
+                                    "children": [
+                                        {
+                                            "name": "224 of <=50K, 187 of >50K",
+                                            "size": 411.0,
+                                            "side": "right"
+                                        },
+                                        {
+                                            "name": "118 of <=50K, 23 of >50K",
+                                            "size": 141.0,
+                                            "side": "left"
+                                        }
+                                    ]
+                                },
+                                {
+                                    "pred": "713 of <=50K, 148 of >50K",
+                                    "side": "left",
+                                    "name": "Loss > 2391.5",
+                                    "type": "numerical",
+                                    "size": 861.0,
+                                    "children": [
+                                        {
+                                            "name": "0 of <=50K, 11 of >50K",
+                                            "size": 11.0,
+                                            "side": "right"
+                                        },
+                                        {
+                                            "name": "713 of <=50K, 137 of >50K",
+                                            "size": 850.0,
+                                            "side": "left"
+                                        }
+                                    ]
+                                }
+                            ]
+                        },
+                        {
+                            "pred": "23689 of <=50K, 898 of >50K",
+                            "side": "left",
+                            "name": "Loss > 2218.5",
+                            "type": "numerical",
+                            "size": 24587.0,
+                            "children": [
+                                {
+                                    "pred": "60 of <=50K, 65 of >50K",
+                                    "side": "right",
+                                    "name": "Loss > 2365.5",
+                                    "type": "numerical",
+                                    "size": 125.0,
+                                    "children": [
+                                        {
+                                            "name": "15 of <=50K, 42 of >50K",
+                                            "size": 57.0,
+                                            "side": "right"
+                                        },
+                                        {
+                                            "name": "45 of <=50K, 23 of >50K",
+                                            "size": 68.0,
+                                            "side": "left"
+                                        }
+                                    ]
+                                },
+                                {
+                                    "pred": "23629 of <=50K, 833 of >50K",
+                                    "side": "left",
+                                    "name": "HPR > 42.5",
+                                    "type": "numerical",
+                                    "size": 24462.0,
+                                    "children": [
+                                        {
+                                            "name": "4160 of <=50K, 444 of >50K",
+                                            "size": 4604.0,
+                                            "side": "right"
+                                        },
+                                        {
+                                            "name": "19469 of <=50K, 389 of >50K",
+                                            "size": 19858.0,
+                                            "side": "left"
+                                        }
+                                    ]
+                                }
+                            ]
+                        }
+                    ]
+                }
+            ]
+        }
+    ]
+}

@@ -1,0 +1,538 @@
+<!DOCTYPE html>
+<meta charset="utf-8">
+
+<head>
+    <style>
+        .node {
+            cursor: pointer;
+        }
+
+        .node circle {
+            fill: #fff;
+            stroke: steelblue;
+            stroke-width: 1.5px;
+        }
+
+        .node text {
+            font: 10px sans-serif;
+        }
+
+        .link {
+            fill: none;
+            stroke:#6ff800;
+        }
+
+        .legends{
+            position: fixed;
+            top: 1px;
+            z-index: -1;
+            left:5px;
+        }
+
+        .legendTitle{
+            position: fixed;
+            top: 1px;
+            z-index: -1;
+            left:5px;
+        }
+
+        .main{
+            position: relative;
+            top: 99px;
+            z-index: 5
+        }
+
+
+        .tlink{
+            stroke: rgb(158, 156, 156);
+            font-family: Verdana;
+            font-size: 12px;
+            stroke-width: 0.04em;
+        }
+
+    </style>
+
+</head>
+
+
+<body>
+<script src="lib/d3.v3.min.js"></script>
+<script>
+
+
+
+    var label_names;
+
+    var TOTAL_SIZE;
+    default_colors=[
+        "#40bc96","#fabd57","#f5696d","#093868",
+        "#fcdfe6","#94a2fa","#faec94","#decaee"
+        ]
+
+
+
+    var file_name="tree_structure.json";
+
+
+    var tree_branch = false; // if the thickness of the branches depend on the value of targt + color * /
+    var tree_branch_parent = true; //  true: thickness from the root if not the direct parent
+    var tree_branch_color = "black";
+    var strokeness = 120; //  the degree of separation between the nodes
+    var default_strokeness = 50;
+    var hover_percent_parent = false; // if the display percentage depends on the direct parent or the root
+
+
+    var margin = {top: 20, right: 120, bottom: 20, left: 180},
+        width = 2000 + 960 - margin.right - margin.left,
+        height = 800 - margin.top - margin.bottom;
+
+    var i = 0,
+        duration = 550,
+        root;
+
+    var tree;
+    var diagonal;
+    var svg;
+
+    var filetochoose = file_name;
+
+    d3.json(filetochoose, function(error, flare) {
+        if (error) throw error;
+
+        // console.log(getDepth(flare));
+
+        tree = d3.layout.tree()
+            .separation(function(a, b) { return ((a.parent == root) && (b.parent == root)) ? strokeness : strokeness; })
+            .size([height, width]);
+
+        diagonal = d3.svg.diagonal()
+            .projection(function(d) { return [d.y, d.x]; });
+
+        svg = d3.select("body").append("svg")
+            .attr("width", width + margin.right + margin.left)
+            .attr("height", height + margin.top + margin.bottom)
+            .append("g")
+            .attr("transform", "translate(" + margin.left + "," + margin.top + ")");
+
+        TOTAL_SIZE = flare.size;
+        l = flare.pred.replace(/of/g,"").split(', ');
+        for( var j=0; j < l.length; j++){
+            l[j] = l[j].split(' ')[2]
+        }
+        label_names = l;
+
+
+        root = flare;
+        root.x0 = height / 2;
+        root.y0 = 0;
+
+        function collapse(d) {
+            if (d.children) {
+                d._children = d.children;
+                d._children.forEach(collapse);
+                d.children = null;
+            }
+        }
+
+        root.children.forEach(collapse);
+        update(root,l.length);
+        createLabels(l);
+    });
+
+    d3.select(self.frameElement).style("height", "480px");
+
+    function update(source,n_labels) {
+
+
+        // Compute the new tree layout.
+        var nodes = tree.nodes(root).reverse(),
+            links = tree.links(nodes);
+        tpaths = tree.links(nodes);
+
+        // Normalize for fixed-depth.
+        nodes.forEach(function(d) { d.y = d.depth * 180; });
+
+        // Update the nodes…
+        var node = svg.selectAll("g.node")
+            .data(nodes, function(d) { return d.id || (d.id = ++i); });
+
+        // Enter any new nodes at the parent's previous position.
+        var nodeEnter = node.enter().append("g")
+            .attr("class", "node")
+            .attr("transform", function(d) { return "translate(" + source.y0 + "," + source.x0 + ")"; })
+            .on("click", click);
+
+        var rect = nodeEnter.append("rect")
+            .attr("width", 100)
+            .attr("height", 50)
+            .attr("x",-100)
+            .attr("y",-25)
+            .attr("rx",6)
+            .attr("ry",6)
+            .style("fill",function(d){return  (d.children || d._children)  ? "#f0f0f0" : "#ffffff"})
+            .style("stroke",function(d){return  (d.children || d._children) ? "rgb(155, 155, 155)" : "#ffffff"})
+            .style("visibility", function(d){return  (d.children || d._children) ? "visible" : "hidden"});
+
+        nodeEnter.append("circle")
+            .attr("r", 1e-6)
+            .style("fill", function(d) {
+
+                return d._children ? "lightsteelblue" : "#fff";
+            });
+
+        nodeEnter.append("text")
+            .attr("x", function (d) {
+                return (d.children || d._children) ? -95 : 26
+            })
+            .attr("y",function (d) {
+                return (d.children || d._children) ? -17 : 0
+            })
+            .attr("dy", ".35em")
+            .attr("text-anchor", "start" )
+            .style("font-size","10px")
+            .style("font-family","Verdana")
+            .style("stroke","#c2c2c2")
+            .style("stroke-width","0.05em")
+            .text(function(d) {  return d.size + "/" + (d.size * 100 / TOTAL_SIZE).toFixed(0) + "%"; })
+            .append('svg:title')
+            .text(function(d){
+                return  "Number of Samples"
+            });
+
+        function getTextWidth(text, fontSize, fontFace) {
+            var a = document.createElement('canvas');
+            var b = a.getContext('2d');
+            b.font = fontSize + 'px ' + fontFace;
+            return b.measureText(text).width;
+        }
+
+        nodeEnter.append("text")
+            .attr("x", function(d) {
+                if(d.children || d._children){
+                    return (d.children || d._children) ? -95 : 0
+                }
+                else return (d.children || d._children) ? -95 : 0
+            })
+            .attr("y",function(d){
+                return -2
+            })
+            .attr("dy", ".35em")
+            .attr("text-anchor", "start" )
+            .style("font-size","13px")
+            .style("font-family","Verdana")
+            .style("stroke","black")
+            .style("stroke-width","0.05em")
+
+            .text(function(d) {
+                if(d.children || d._children){
+                    return  d.name.match(
+                        /(.*?)[>=]/i)[1].length <=10 ? d.name.match(/(.*?)[>=]/i)[1]
+                        : (d.name.match(/(.*?)[>=]/i)[1]).substring(0, 8)+'..'
+                }
+                else  return  "";
+            })
+            .append('svg:title')
+            .text(function(d){
+                return  (d.children || d._children) ?  d.name : ""
+            });
+
+        nodeEnter.append("text")
+            .attr("x", function(d) { return (d.children || d._children) ? -95 :0})
+            .attr("y",14)
+            .attr("dy", ".35em")
+            .attr("text-anchor", "start" )
+            .style("font-size","12px")
+            .style("font-family","Verdana")
+            .style("stroke","black")
+            .style("stroke-width","0.04em")
+            .text(function(d) {
+
+                if(d.children || d._children){
+                    return  d.name.replace(d.name.match(/(.*?)[>=]/i)[1],'').length <=12 ?
+                        d.name.replace(d.name.match(/(.*?)[>=]/i)[1],'')
+                        : d.name.replace(d.name.match(/(.*?)[>=]/i)[1],'').substring(0, 10)+'..'
+                }
+
+                else return ""
+            })
+            .append('svg:title')
+            .text(function(d){
+                return  (d.children || d._children) ?  d.name : ""
+            });
+
+
+       // -------------------------------------------------------------------------------------------------------- //
+
+        // Donut chart at node position
+
+        var arc = d3.svg.arc()
+            .outerRadius(24.9)
+            .innerRadius(12);
+
+        var pie = d3.layout.pie()
+            .value(function(d) {
+                return d.value;
+            })
+            .sort(null);
+
+        var color = d3.scale.ordinal()
+            .range(default_colors);
+
+        function drawPie(d) {
+            d3.select(this)
+                .selectAll('path')
+                .data(function (d) {
+                    var pred = (d.children || d._children) ? d.pred : d.name;
+                    var values_and_labels = pred.replace(/of/g, "").split(", ");
+                    window.dict_pie = {};
+                    for(var j=0; j < values_and_labels.length; j++){
+                        val_lab = values_and_labels[j];
+                        val_lab = val_lab.split("  ");
+                        dict_pie[val_lab[1]] = val_lab[0];
+                    }
+                    console.log(dict_pie)
+                    return pie(d3.entries(dict_pie))
+                })
+                .enter()
+                .append('path')
+                .attr('d', arc)
+                .attr('fill', function(d, i) {
+                    return color(i);
+                })
+                .append("svg:title")
+                .text(function(d, i) {
+                    var sample_lables_array =  Object.keys(dict_pie)
+                    var sample_values_array = Object.values(dict_pie).map(Number)
+                    var total_samples = sample_values_array.reduce((a, b) => a + b, 0)
+
+                    return "Class : " + sample_lables_array[i] + "\nSamples : " + sample_values_array[i] + " (" +
+                        (sample_values_array[i]/total_samples * 100).toFixed(2) + "%)"
+                });
+
+        }
+
+        nodeEnter.each(drawPie)
+
+        // --------------------------------------------------------------------------------------------------------- //
+
+        // Transition nodes to their new position.
+        var nodeUpdate = node.transition()
+            .duration(duration)
+            .attr("transform", function(d) { return "translate(" + d.y + "," + d.x + ")"; });
+
+        nodeUpdate.select("circle")
+            .attr("r", 12)
+            .style("fill", function(d) { return d._children ? "lightsteelblue" : "#fff"; });
+
+        nodeUpdate.select("text")
+            .style("fill-opacity", 1);
+
+        // Transition exiting nodes to the parent's new position.
+        var nodeExit = node.exit().transition()
+            .duration(duration)
+            .attr("transform", function(d) { return "translate(" + source.y + "," + source.x + ")"; })
+            .remove();
+
+        nodeExit.select("circle")
+            .attr("r", 1e-6);
+
+        nodeExit.select("text")
+            .style("fill-opacity", 1e-6);
+
+        // Update the links…
+        var link = svg.selectAll("path.link")
+            .data(links, function(d) { return d.target.id; });
+
+
+        if(tree_branch) var link_stoke_scale = d3.scale.linear().domain([0, 100]).range([1.5, default_strokeness]);
+        else var link_stoke_scale = d3.scale.linear().domain([0, 100]).range([1.5, 8]);
+
+        var color = d3.scale.linear()
+            .domain([0, 50, 100])
+            .range(["rgb(2, 255, 219)", "blue"]);
+
+
+        // Enter any new links at the parent's previous position.
+        link.enter().insert("path", "g")
+            .attr("class", "link")
+            .attr("id",function(d) { return d.target.id; })
+            .attr("d", function(d) {
+                var o = {x: source.x0, y: source.y0};
+                return diagonal({source: o, target: o});
+            })
+            .style("stroke-width", function(d) {
+
+                if(!d.target){
+                    return link_stoke_scale(50)
+                }
+                else {
+                    if (tree_branch) {
+                        return tree_branch_parent ? link_stoke_scale(d.target.size*100/TOTAL_SIZE) :
+                            link_stoke_scale(d.target.size*100/d.source.size)
+                    }else{
+
+                        return link_stoke_scale(50)
+                    }
+                }
+            })
+            .style("stroke", function(d) {
+
+                if(!d.target){
+                    return "#fff"
+                }
+                else return tree_branch_color;
+            })
+            .append("svg:title")
+            .text(function(d, i) {
+                if(hover_percent_parent){
+                    var val =  ( (d.target.size/TOTAL_SIZE) * 100 ).toFixed(2);
+                }else{
+                    var val =  ( (d.target.size/d.source.size) * 100 ).toFixed(2);
+                }
+
+                return val+"%"
+            });
+
+        var tlink = svg.selectAll("text.tlink")
+            .data(tpaths, function(d) { return d.target.id; });
+
+        tlink.enter().insert("text", "g")
+            .attr("class", "tlink")
+            .attr("dy",function(d) { return d.target.side == "left" ? -10 : 15 ; })
+            .append('textPath')
+            .attr("xlink:href", function(d) { return '#'+d.target.id; }) //place the ID of the path here
+            .style("text-anchor","middle") //place the text halfway on the arc
+            .attr("startOffset", "45%")
+            .text(function(d) {  return d.target.side == "left" ? "No" : "Yes" ; })
+            .attr('visibility', function(d) {  return d.target.depth == 1 ? 'visible' : 'hidden'});
+
+
+        tlink.exit().transition()
+            .duration(duration)
+            .attr("d", function(d) {
+                var o = {x: source.x, y: source.y};
+                return diagonal({source: o, target: o});
+            })
+            .remove();
+
+        // Transition links to their new position.
+        link.transition()
+            .duration(duration)
+            .attr("d", diagonal)
+            .style("stroke-width", function(d) {
+
+                if(!d.target){
+                    return link_stoke_scale(50)
+                }
+                else {
+                    if (tree_branch) {
+                        //   console.log(d.target.size,'*100/',TOTAL_SIZE,link_stoke_scale(d.target.size*100/TOTAL_SIZE),tree_branch_parent)
+                        //   console.log(d.target.size,'*100/',d.source.size,link_stoke_scale(d.target.size*100/d.source.size),tree_branch_parent)
+
+                        return tree_branch_parent ? link_stoke_scale(d.target.size*100/TOTAL_SIZE) : link_stoke_scale(d.target.size*100/d.source.size)
+                    }else{
+
+                        return link_stoke_scale(50)
+                    }
+                }
+            });
+
+
+        // Transition exiting nodes to the parent's new position.
+        link.exit().transition()
+            .duration(duration)
+            .attr("d", function(d) {
+                var o = {x: source.x, y: source.y};
+                return diagonal({source: o, target: o});
+            })
+            .remove();
+
+        // Stash the old positions for transition.
+        nodes.forEach(function(d) {
+            d.x0 = d.x;
+            d.y0 = d.y;
+        });
+
+
+// Toggle children on click.
+        function click(d) {
+            if (d.children) {
+                d._children = d.children;
+                d.children = null;
+            } else {
+                d.children = d._children;
+                d._children = null;
+            }
+            update(d,n_labels);
+        }
+
+
+    }
+
+
+
+
+    function createLabels(labels) {
+
+
+        var Size = 400;
+
+
+        var svg1 = d3.select("body")
+            .append("svg")
+            .attr("width",Size)
+            .attr("height", Size)
+            .attr("class","legends");
+
+        default_colors = default_colors.slice(0,labels.length);
+        if(default_colors.length == 2) default_colors.push('');
+        if (default_colors.length == 0){
+            var c_l =  default_colors
+        }else{
+            var c_l =  default_colors
+        }
+
+        var legendT = svg1
+            .append("g")
+            .attr("transform", function(d){
+                return "translate(" + 0 + "," + 20 + ")";
+            })
+            .attr("class", "legendTitle");
+
+        label_title = 'Income'
+
+        legendT.append("text")
+            .text(label_title)
+            .style("font-size", 20)
+            .style("font-weight", 900)
+
+        for(i=0; i< c_l.length; i++){
+
+            var legendG = svg1
+                .append("g")
+                .attr("transform", function(d){
+                    return "translate("+0+"," + ( 30*i + 35) + ")"; // place each legend on the right and bump each one down 15 pixels
+                })
+                .attr("class", "legends");
+
+            legendG.append("rect") // make a matching color rect
+                .attr("width", 15)
+                .attr("height", 15)
+                .attr("fill", c_l[i])
+                .style('visibility',function(){
+                    return labels[i] ? "visible": "hidden"
+                });
+
+            legendG.append("text") // add the text
+                .text(labels[i])
+                .style("font-size", 20)
+                .attr("y", 15)
+                .attr("x", 21)
+
+        }
+
+    }
+
+</script>
+
+</body>
