@@ -9,8 +9,6 @@ df = pd.read_csv("adult.csv", sep=',')
 df.dropna(inplace=True)
 df.drop(['fnlwgt', 'Education'], axis=1, inplace=True)
 
-print(df.columns)
-
 
 # set the label column
 

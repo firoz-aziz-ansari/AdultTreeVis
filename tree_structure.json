@@ -29,18 +29,18 @@
                                 {
                                     "pred": "1 of <=50K, 4 of >50K",
                                     "side": "right",
-                                    "name": "Gain > 15308.5",
-                                    "type": "numerical",
+                                    "name": "WorkClass = Self-emp-not-inc",
+                                    "type": "categorical",
                                     "size": 5.0,
                                     "children": [
                                         {
-                                            "name": "0 of <=50K, 3 of >50K",
-                                            "size": 3.0,
+                                            "name": "1 of <=50K, 1 of >50K",
+                                            "size": 2.0,
                                             "side": "right"
                                         },
                                         {
-                                            "name": "1 of <=50K, 1 of >50K",
-                                            "size": 2.0,
+                                            "name": "0 of <=50K, 3 of >50K",
+                                            "size": 3.0,
                                             "side": "left"
                                         }
                                     ]
@@ -151,18 +151,18 @@
                                 {
                                     "pred": "3 of <=50K, 681 of >50K",
                                     "side": "left",
-                                    "name": "YearsOfEd > 1.5",
-                                    "type": "numerical",
+                                    "name": "Country = South",
+                                    "type": "categorical",
                                     "size": 684.0,
                                     "children": [
                                         {
-                                            "name": "2 of <=50K, 681 of >50K",
-                                            "size": 683.0,
+                                            "name": "1 of <=50K, 0 of >50K",
+                                            "size": 1.0,
                                             "side": "right"
                                         },
                                         {
-                                            "name": "1 of <=50K, 0 of >50K",
-                                            "size": 1.0,
+                                            "name": "2 of <=50K, 681 of >50K",
+                                            "size": 683.0,
                                             "side": "left"
                                         }
                                     ]
@@ -284,18 +284,18 @@
                         {
                             "pred": "5 of <=50K, 1 of >50K",
                             "side": "left",
-                            "name": "Occupation = Prof-specialty",
-                            "type": "categorical",
+                            "name": "Gain > 24089.5",
+                            "type": "numerical",
                             "size": 6.0,
                             "children": [
                                 {
-                                    "name": "0 of <=50K, 1 of >50K",
-                                    "size": 1.0,
+                                    "name": "5 of <=50K, 0 of >50K",
+                                    "size": 5.0,
                                     "side": "right"
                                 },
                                 {
-                                    "name": "5 of <=50K, 0 of >50K",
-                                    "size": 5.0,
+                                    "name": "0 of <=50K, 1 of >50K",
+                                    "size": 1.0,
                                     "side": "left"
                                 }
                             ]
