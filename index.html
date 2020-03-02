@@ -304,9 +304,16 @@
                     var sample_lables_array =  Object.keys(dict_pie)
                     var sample_values_array = Object.values(dict_pie).map(Number)
                     var total_samples = sample_values_array.reduce((a, b) => a + b, 0)
+                    if (d.children || d._children){
+                        return "Class : " + sample_lables_array[i] + "\nSamples : " +
+                            sample_values_array[i] + " (" + (sample_values_array[i]/total_samples * 100).toFixed(2) + "%)"
+                    }
+                    else {
+                        return "Class : " + sample_lables_array[i] +
+                            "\nProbability : " + (sample_values_array[i]/total_samples * 100).toFixed(2) + " %" +
+                            "\nSamples : " + sample_values_array[i]
+                    }
 
-                    return "Class : " + sample_lables_array[i] + "\nSamples : " + sample_values_array[i] + " (" +
-                        (sample_values_array[i]/total_samples * 100).toFixed(2) + "%)"
                 });
 
         }
