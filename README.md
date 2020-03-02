@@ -20,7 +20,7 @@ A decision tree is a flowchart-like structure in which each internal node repres
 represents the outcome of an instance for that condition. In this project we will create a decision tree for the 
 <a href = "https://archive.ics.uci.edu/ml/datasets/Adult"> Adult dataset</a> using 
 <a href="https://scikit-learn.org/stable/modules/generated/sklearn.tree.DecisionTreeClassifier.html">
-sklearn's DecisionTreeClassifier</a>. The decision tree classifies individual based on their income ($>50K or $<=50K). 
+sklearn's DecisionTreeClassifier</a>. The decision tree classifies individuals based on their income ($>50K or $<=50K). 
 The resultant tree is then visualized using <a href = "https://d3js.org/">D3.js</a>. Each node in the interactive 
 visualization is represented as shown in the figure above. Clicking the node will expand/condense the tree. 
 <mark>The complete visualization of tree can be seen 
